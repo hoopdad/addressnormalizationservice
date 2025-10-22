@@ -1,23 +1,14 @@
 {
   "name": "addressnormalizationservice",
   "version": "1.0.0",
-  "description": "a demo of nodejs services",
+  "description": "Just an example of an http server in Node with an odd project name.",
   "main": "addressnormalizerservice.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node addressnormalizerservice.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hoopdad/addressnormalizationservice.git"
-  },
-  "author": "Mike Olivieri",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hoopdad/addressnormalizationservice/issues"
-  },
-  "homepage": "https://github.com/hoopdad/addressnormalizationservice#readme",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^5.1.0"
   }
 }
