@@ -1,0 +1,42 @@
+name: Security Audit & Auto-fix
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Runs every Monday at 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit-and-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Run npm audit
+        id: audit
+        run: npm audit
+        continue-on-error: true
+
+      - name: Auto-fix vulnerabilities
+        if: steps.audit.outcome == 'failure'
+        run: npm audit fix --force
+
+      - name: Commit and push fixes
+        if: steps.audit.outcome == 'failure'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git diff --staged --quiet || git commit -m "chore: auto-fix npm audit vulnerabilities [skip ci]"
+          git push
